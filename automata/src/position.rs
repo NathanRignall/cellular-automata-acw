@@ -32,7 +32,7 @@ pub fn available_diagonal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec
     positions
 }
 
-pub fn available_normal(position: (usize, usize), grid: &Vec<Vec<bool>>) -> Vec<(usize, usize)> {
+pub fn available_normal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec<(usize, usize)> {
     let (x, y) = position;
     let mut positions = Vec::new();
     

@@ -1,0 +1,17 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.wordWrap": "bounded",
+    
+    // "editor left padding"
+    "editor.minimap.enabled": true,
+    "editor.minimap.autohide": true,
+    "editor.minimap.side": "left",
+    "editor.minimap.maxColumn": 60,
+    "editor.padding.top": 10,
+    "editor.folding": false,
+    "editor.lineNumbers": "off",
+    "editor.glyphMargin": false,
+    "editor.wordWrapColumn": 100,
+    "editor.fontSize": 16,
+    "editor.fontFamily": "Calibri, sans-serif",
+}
