@@ -1,7 +1,7 @@
 fn generate(power: i32) {
     // open a csv file and write the header
     let path = format!(
-        "output/bulk2/task2-1-{}.csv",
+        "output/bulk-m/task2-1-{}.csv",
         power
     );
     let mut wtr = csv::Writer::from_path(path).unwrap();
