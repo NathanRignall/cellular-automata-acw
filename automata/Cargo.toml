@@ -8,3 +8,55 @@ edition = "2021"
 [dependencies]
 rand = "0.8.5"
 csv = "1.1"
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+
+[[bench]]
+name = "my_benchmark"
+harness = false
+
+[[bin]]
+name = "task1-1-fill"
+test = false
+bench = false
+
+[[bin]]
+name = "task1-1"
+test = false
+bench = false
+
+[[bin]]
+name = "task1-2-fill"
+test = false
+bench = false
+
+[[bin]]
+name = "task1-2"
+test = false
+bench = false
+
+[[bin]]
+name = "task1-comp"
+test = false
+bench = false
+
+[[bin]]
+name = "task2-1"
+test = false
+bench = false
+
+[[bin]]
+name = "task2-2"
+test = false
+bench = false
+
+[[bin]]
+name = "task2-comp-h"
+test = false
+bench = false
+
+[[bin]]
+name = "task2-comp-m"
+test = false
+bench = false
