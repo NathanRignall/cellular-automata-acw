@@ -47,6 +47,8 @@ fn generate(
     grid_size: usize,
     count: usize,
     iterations: usize,
+    visited: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
+    visted_diagonal: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
 ) {
     // open a csv file and write the header
     let path = format!(
@@ -59,6 +61,12 @@ fn generate(
     // run the simulation
     for _ in 0..count {
         let positions = simulate(grid_size, start_position, end_position, iterations, false);
+
+        // get the lock for visited positions and store the positions
+        let mut visited = visited.lock().unwrap();
+        for position in positions.iter() {
+            visited.push(*position);
+        }
 
         // write the length of the path to the csv file
         wtr.write_record(&[positions.len().to_string()]).unwrap();
@@ -75,6 +83,12 @@ fn generate(
     // run the simulation
     for _ in 0..count {
         let positions = simulate(grid_size, start_position, end_position, iterations, true);
+
+        // get the lock for visited positions and store the positions
+        let mut visted_diagonal = visted_diagonal.lock().unwrap();
+        for position in positions.iter() {
+            visted_diagonal.push(*position);
+        }
 
         // write the length of the path to the csv file
         wtr.write_record(&[positions.len().to_string()]).unwrap();
@@ -107,11 +121,18 @@ fn main() {
     // array to store threads
     let mut threads = Vec::new();
 
+    // mutex for visited positions
+    let visited = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+    let visted_diagonal = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+
     // loop over map_positions and run the simulation
     for (start_position, end_position) in map_positions {
+        let visited = visited.clone();
+        let visted_diagonal = visted_diagonal.clone();
+
         // create a thread to run the simulation
         let thread = std::thread::spawn(move || {
-            generate(start_position, end_position, grid_size, count, iterations);
+            generate(start_position, end_position, grid_size, count, iterations, visited, visted_diagonal);
         });
         threads.push(thread);
     }
@@ -119,5 +140,27 @@ fn main() {
     // wait for all threads to finish
     for thread in threads {
         thread.join().unwrap();
+    }
+
+    // write the visited positions to a csv file
+    let mut wtr = csv::Writer::from_path("output/bulk/task1-visited.csv").unwrap();
+    wtr.write_record(["x", "y"]).unwrap();
+
+    // get the lock for visited positions and write the positions to the csv file
+    let visited = visited.lock().unwrap();
+    for position in visited.iter() {
+        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
+            .unwrap();
+    }
+
+    // write the visited positions to a csv file
+    let mut wtr = csv::Writer::from_path("output/bulk/task1-visited-diagonal.csv").unwrap();
+    wtr.write_record(["x", "y"]).unwrap();
+
+    // get the lock for visited positions and write the positions to the csv file
+    let visited = visted_diagonal.lock().unwrap();
+    for position in visited.iter() {
+        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
+            .unwrap();
     }
 }
