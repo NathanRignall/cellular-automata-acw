@@ -1,46 +1,3 @@
-fn move_cell(position: &mut (usize, usize), grid: &mut Vec<Vec<f64>>, diagonal: bool) {
-    // move the cell
-    let available_positions = {
-        if diagonal {
-            automata::position::available_diagonal(*position, grid)
-        } else {
-            automata::position::available_normal(*position, grid)
-        }
-    };
-    let random_position = rand::random::<usize>() % available_positions.len();
-    *position = available_positions[random_position];
-    grid[position.0][position.1] = 1.0;
-}
-
-fn simulate(
-    grid_size: usize,
-    start_position: (usize, usize),
-    end_position: (usize, usize),
-    max_iterations: usize,
-    diagonal: bool,
-) -> Vec<(usize, usize)> {
-    // create a grid of cells 100x100 which are bool and set to false
-    let mut grid = vec![vec![0.0; grid_size]; grid_size];
-    let mut position = start_position;
-    grid[position.0][position.1] = 1.0;
-
-    // loop for n iterations
-    let mut positions = Vec::new();
-    for _ in 0..max_iterations {
-        // simulate the movement of the cells
-        move_cell(&mut position, &mut grid, diagonal);
-
-        // store the position
-        positions.push(position);
-
-        // stop if the cell is at the end position
-        if position == end_position {
-            break;
-        }
-    }
-    positions
-}
-
 fn generate(
     start_position: (usize, usize),
     end_position: (usize, usize),
@@ -48,7 +5,7 @@ fn generate(
     count: usize,
     iterations: usize,
     visited: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
-    visted_diagonal: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
+    visited_diagonal: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
 ) {
     // open a csv file and write the header
     let path = format!(
@@ -60,7 +17,13 @@ fn generate(
 
     // run the simulation
     for _ in 0..count {
-        let positions = simulate(grid_size, start_position, end_position, iterations, false);
+        let positions = automata::simulate::simulate(
+            grid_size,
+            start_position,
+            end_position,
+            iterations,
+            false,
+        );
 
         // get the lock for visited positions and store the positions
         let mut visited = visited.lock().unwrap();
@@ -82,10 +45,11 @@ fn generate(
 
     // run the simulation
     for _ in 0..count {
-        let positions = simulate(grid_size, start_position, end_position, iterations, true);
+        let positions =
+            automata::simulate::simulate(grid_size, start_position, end_position, iterations, true);
 
         // get the lock for visited positions and store the positions
-        let mut visted_diagonal = visted_diagonal.lock().unwrap();
+        let mut visted_diagonal = visited_diagonal.lock().unwrap();
         for position in positions.iter() {
             visted_diagonal.push(*position);
         }
@@ -123,16 +87,24 @@ fn main() {
 
     // mutex for visited positions
     let visited = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
-    let visted_diagonal = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+    let visited_diagonal = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
 
     // loop over map_positions and run the simulation
     for (start_position, end_position) in map_positions {
         let visited = visited.clone();
-        let visted_diagonal = visted_diagonal.clone();
+        let visited_diagonal = visited_diagonal.clone();
 
         // create a thread to run the simulation
         let thread = std::thread::spawn(move || {
-            generate(start_position, end_position, grid_size, count, iterations, visited, visted_diagonal);
+            generate(
+                start_position,
+                end_position,
+                grid_size,
+                count,
+                iterations,
+                visited,
+                visited_diagonal,
+            );
         });
         threads.push(thread);
     }
@@ -158,7 +130,7 @@ fn main() {
     wtr.write_record(["x", "y"]).unwrap();
 
     // get the lock for visited positions and write the positions to the csv file
-    let visited = visted_diagonal.lock().unwrap();
+    let visited = visited_diagonal.lock().unwrap();
     for position in visited.iter() {
         wtr.write_record(&[position.0.to_string(), position.1.to_string()])
             .unwrap();

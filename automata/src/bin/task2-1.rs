@@ -10,7 +10,7 @@ fn main() {
     let initial_n: f64 = 1_000_000_000.0;
     let t_final = (1200.0 / dt) as usize;
 
-    // intitalize an array to store the number of cells
+    // initialize an array to store the number of cells
     let mut n: Vec<f64> = vec![0.0; t_final];
     n[0] = initial_n;
 
