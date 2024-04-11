@@ -1,5 +1,3 @@
-use automata::position;
-
 fn main() {
     // open a csv file and write the header
     let mut wtr = csv::Writer::from_path("output/task2-2.csv").unwrap();
@@ -14,7 +12,7 @@ fn main() {
     let m: f64 = 10_000_000_000_000.0;
     let dt: f64 = 0.001;
     let initial_n: f64 = 1_000_000_000.0;
-    let t_final = (1200.0 / dt )as usize;
+    let t_final = (1200.0 / dt) as usize;
 
     let grid_size = 100;
     let iterations = 100;
@@ -37,7 +35,7 @@ fn main() {
         let available_positions = automata::position::available_diagonal(position, &grid);
         let random_position = rand::random::<usize>() % available_positions.len();
         let new_position = available_positions[random_position];
-        
+
         // simulate the growth of the cells
         let n = automata::growth::simulate(k, m, dt, initial_n, t_final);
         new_grid[new_position.0][new_position.1] = n[t_final - 1];
@@ -55,12 +53,17 @@ fn main() {
         running_total += n[t_final - 1];
 
         // write the position to the csv file
-        wtr.write_record(&[position.0.to_string(), position.1.to_string(), grid[position.0][position.1].to_string()]).unwrap();
+        wtr.write_record(&[
+            position.0.to_string(),
+            position.1.to_string(),
+            grid[position.0][position.1].to_string(),
+        ])
+        .unwrap();
     }
 
     // write the total number of cells to the csv file
     for (i, cells) in total_cells.iter().enumerate() {
-        wtr2.write_record(&[i.to_string(), cells.to_string()]).unwrap();
+        wtr2.write_record(&[i.to_string(), cells.to_string()])
+            .unwrap();
     }
-
 }

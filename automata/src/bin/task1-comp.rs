@@ -41,7 +41,13 @@ fn simulate(
     positions
 }
 
-fn generate(start_position: (usize, usize), end_position: (usize, usize), grid_size: usize, count: usize, iterations: usize) {
+fn generate(
+    start_position: (usize, usize),
+    end_position: (usize, usize),
+    grid_size: usize,
+    count: usize,
+    iterations: usize,
+) {
     // open a csv file and write the header
     let path = format!(
         "output/bulk/task1-1-{}-{}--{}-{}.csv",
@@ -97,7 +103,6 @@ fn main() {
         }
         map_positions
     };
-
 
     // array to store threads
     let mut threads = Vec::new();

@@ -6,7 +6,12 @@ fn move_cell(position: &mut (usize, usize), grid: &mut Vec<Vec<f64>>) {
     grid[position.0][position.1] = 1.0;
 }
 
-fn simulate(grid_size: usize, start_position: (usize, usize), end_position: (usize, usize), max_iterations: usize) -> Vec<(usize, usize)> {
+fn simulate(
+    grid_size: usize,
+    start_position: (usize, usize),
+    end_position: (usize, usize),
+    max_iterations: usize,
+) -> Vec<(usize, usize)> {
     // create a grid of cells 100x100 which are bool and set to false
     let mut grid = vec![vec![0.0; grid_size]; grid_size];
     let mut position = start_position;
@@ -37,14 +42,15 @@ fn main() {
     // parameters for the simulation
     let grid_size = 100;
     let iterations = 1000000;
-    let start_position = (10,10);
-    let end_position = (90,90);
+    let start_position = (10, 10);
+    let end_position = (90, 90);
 
     // simulate the movement of the cells
     let positions = simulate(grid_size, start_position, end_position, iterations);
-        
+
     // write the positions to the csv file
     for position in positions {
-        wtr.write_record(&[position.0.to_string(), position.1.to_string()]).unwrap();
+        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
+            .unwrap();
     }
 }

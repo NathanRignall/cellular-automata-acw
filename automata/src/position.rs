@@ -1,7 +1,7 @@
 pub fn available_diagonal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec<(usize, usize)> {
     let (x, y) = position;
     let mut positions = Vec::new();
-    
+
     // check up down left right
     if x > 0 {
         positions.push((x - 1, y));
@@ -35,7 +35,7 @@ pub fn available_diagonal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec
 pub fn available_normal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec<(usize, usize)> {
     let (x, y) = position;
     let mut positions = Vec::new();
-    
+
     // check up down left right
     if x > 0 {
         positions.push((x - 1, y));

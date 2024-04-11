@@ -26,6 +26,7 @@ fn main() {
         move_cell(&mut position, &mut grid);
 
         // write the position to the csv file
-        wtr.write_record(&[position.0.to_string(), position.1.to_string()]).unwrap();
+        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
+            .unwrap();
     }
 }
