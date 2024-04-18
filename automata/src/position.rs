@@ -52,3 +52,9 @@ pub fn available_normal(position: (usize, usize), grid: &Vec<Vec<f64>>) -> Vec<(
 
     positions
 }
+
+pub fn distance(a: (usize, usize), b: (usize, usize)) -> f64 {
+    let (x1, y1) = a;
+    let (x2, y2) = b;
+    (((x1 as f64 - x2 as f64).powi(2) + (y1 as f64 - y2 as f64).powi(2)) as f64).sqrt()
+}

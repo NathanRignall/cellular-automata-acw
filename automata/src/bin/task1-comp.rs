@@ -23,6 +23,7 @@ fn generate(
             end_position,
             iterations,
             false,
+            true,
         );
 
         // write the length of the path to the csv file
@@ -50,7 +51,7 @@ fn generate(
     // run the simulation
     for _ in 0..count {
         let positions =
-            automata::simulate::simulate(grid_size, start_position, end_position, iterations, true);
+            automata::simulate::simulate(grid_size, start_position, end_position, iterations, true, true);
 
         // write the length of the path to the csv file
         wtr.write_record(&[positions.len().to_string()]).unwrap();

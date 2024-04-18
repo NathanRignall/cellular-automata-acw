@@ -1,4 +1,3 @@
-use automata::growth::simulate;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 // performance test for different values of dt
@@ -20,15 +19,81 @@ fn growth_dt(c: &mut Criterion) {
                     let m: f64 = 10_000_000_000_000.0;
                     let initial_n: f64 = 1_000_000_000.0;
                     let t_final = (1200.0 / dt) as usize;
-                    black_box(simulate(k, m, dt, initial_n, t_final));
+                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final));
                 });
             },
         );
-    
-
     }
     group.finish();
 }
 
-criterion_group!(benches, growth_dt);
+// performance test for different simulation distances
+fn simlate_distance(c: &mut Criterion) {
+    let mut group = c.benchmark_group("simulate_distance");
+
+    // create a vector of lengths from 5 to 95 at intervals of 5
+    let lengths = (1..=50).step_by(1).collect::<Vec<_>>();
+
+    // generate array of start and end positions in random range 20-80
+    let map_positions = {
+        let mut map_positions = Vec::new();
+        for length in lengths.iter() {
+            let start_position = (
+                rand::random::<usize>() % 60 + 20,
+                rand::random::<usize>() % 60 + 20,
+            );
+            map_positions.push((start_position, length));
+        }
+        map_positions
+    };
+
+    for (start_position, length) in map_positions.iter() {
+        group.bench_with_input(
+            criterion::BenchmarkId::new("length", length),
+            length,
+            |b, &length| {
+                b.iter(|| {
+                    let grid_size = 100;
+                    let iterations = 1000000;
+                    let positions =
+                        automata::simulate::simulate_distance(grid_size, *start_position, *length as f64, iterations, true, true);
+                    black_box(positions);
+                });
+            },
+        );
+    }
+
+    group.finish();
+}
+
+// performance test for different simulation grid sizes
+fn simulate_grid_size(c: &mut Criterion) {
+    let mut group = c.benchmark_group("simulate_grid_size");
+
+    // create a vector of grid sizes from 50 to 150 at intervals of 10
+    let grid_sizes = (100..=1000).step_by(25).collect::<Vec<_>>();
+
+    for grid_size in grid_sizes.iter() {
+        group.bench_with_input(
+            criterion::BenchmarkId::new("grid_size", grid_size),
+            grid_size,
+            |b, &grid_size| {
+                // start position is middle of the grid
+                let start_position = (grid_size / 2, grid_size / 2);
+                let length = 50.0;
+
+                b.iter(|| {
+                    let iterations = 1000000;
+                    let positions =
+                        automata::simulate::simulate_distance(grid_size, start_position, length, iterations, true, true);
+                    black_box(positions);
+                });
+            },
+        );
+    }
+
+    group.finish();
+}
+
+criterion_group!(benches, growth_dt, simlate_distance, simulate_grid_size);
 criterion_main!(benches);

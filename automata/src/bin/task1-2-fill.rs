@@ -11,7 +11,7 @@ fn main() {
 
     // simulate the movement of the cells
     let positions =
-        automata::simulate::simulate(grid_size, start_position, end_position, iterations, true);
+        automata::simulate::simulate(grid_size, start_position, end_position, iterations, true, true);
 
     // write the positions to the csv file
     for position in positions {
