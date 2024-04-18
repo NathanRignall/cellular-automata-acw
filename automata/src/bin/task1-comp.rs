@@ -4,8 +4,8 @@ fn generate(
     grid_size: usize,
     count: usize,
     iterations: usize,
-    visited: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
-    visited_diagonal: std::sync::Arc<std::sync::Mutex<Vec<(usize, usize)>>>,
+    visited: std::sync::Arc<std::sync::Mutex<Vec<Vec<u64>>>>,
+    visted_diagonal: std::sync::Arc<std::sync::Mutex<Vec<Vec<u64>>>>,
 ) {
     // open a csv file and write the header
     let path = format!(
@@ -25,14 +25,18 @@ fn generate(
             false,
         );
 
-        // get the lock for visited positions and store the positions
-        let mut visited = visited.lock().unwrap();
-        for position in positions.iter() {
-            visited.push(*position);
-        }
-
         // write the length of the path to the csv file
         wtr.write_record(&[positions.len().to_string()]).unwrap();
+
+        // put the visited positions in the visited grid
+        let mut visited = visited.lock().unwrap();
+        for (x, y) in positions {
+            if x < grid_size && y < grid_size {
+                visited[x][y] += 1;
+            } else {
+                println!("Out of bounds: {}, {}", x, y);
+            }
+        }
     }
 
     // open a csv file and write the header
@@ -48,14 +52,18 @@ fn generate(
         let positions =
             automata::simulate::simulate(grid_size, start_position, end_position, iterations, true);
 
-        // get the lock for visited positions and store the positions
-        let mut visted_diagonal = visited_diagonal.lock().unwrap();
-        for position in positions.iter() {
-            visted_diagonal.push(*position);
-        }
-
         // write the length of the path to the csv file
         wtr.write_record(&[positions.len().to_string()]).unwrap();
+
+        // put the visited positions in the visited grid
+        let mut visited = visted_diagonal.lock().unwrap();
+        for (x, y) in positions {
+            if x < grid_size && y < grid_size {
+                visited[x][y] += 1;
+            } else {
+                println!("Out of bounds: {}, {}", x, y);
+            }
+        }
     }
 }
 
@@ -63,7 +71,7 @@ fn main() {
     // parameters for the simulation
     let grid_size = 100;
     let iterations = 1000000;
-    let count = 100000;
+    let count = 10000;
 
     // generate array of start and end positions in random range 20-80 (100)
     let map_positions = {
@@ -85,9 +93,13 @@ fn main() {
     // array to store threads
     let mut threads = Vec::new();
 
-    // mutex for visited positions
-    let visited = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
-    let visited_diagonal = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+    // create grid to store visited positions
+    let visited_grid: Vec<Vec<u64>> = vec![vec![0; grid_size]; grid_size];
+    let visited_diagonal_grid: Vec<Vec<u64>> = vec![vec![0; grid_size]; grid_size];
+
+    // put grids in mutex
+    let visited = std::sync::Arc::new(std::sync::Mutex::new(visited_grid));
+    let visited_diagonal = std::sync::Arc::new(std::sync::Mutex::new(visited_diagonal_grid));
 
     // loop over map_positions and run the simulation
     for (start_position, end_position) in map_positions {
@@ -116,23 +128,37 @@ fn main() {
 
     // write the visited positions to a csv file
     let mut wtr = csv::Writer::from_path("output/bulk/task1-visited.csv").unwrap();
-    wtr.write_record(["x", "y"]).unwrap();
+    wtr.write_record(["x", "y", "count"]).unwrap();
 
     // get the lock for visited positions and write the positions to the csv file
     let visited = visited.lock().unwrap();
-    for position in visited.iter() {
-        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
-            .unwrap();
+    for (x, row) in visited.iter().enumerate() {
+        for (y, &value) in row.iter().enumerate() {
+            if value > 0 {
+                wtr.write_record(&[x.to_string(), y.to_string(), value.to_string()])
+                    .unwrap();
+            }
+        }
     }
+
+    // close the csv file
+    wtr.flush().unwrap();
 
     // write the visited positions to a csv file
     let mut wtr = csv::Writer::from_path("output/bulk/task1-visited-diagonal.csv").unwrap();
-    wtr.write_record(["x", "y"]).unwrap();
+    wtr.write_record(["x", "y", "count"]).unwrap();
 
     // get the lock for visited positions and write the positions to the csv file
     let visited = visited_diagonal.lock().unwrap();
-    for position in visited.iter() {
-        wtr.write_record(&[position.0.to_string(), position.1.to_string()])
-            .unwrap();
+    for (x, row) in visited.iter().enumerate() {
+        for (y, &value) in row.iter().enumerate() {
+            if value > 0 {
+                wtr.write_record(&[x.to_string(), y.to_string(), value.to_string()])
+                    .unwrap();
+            }
+        }
     }
+
+    // close the csv file
+    wtr.flush().unwrap();
 }
