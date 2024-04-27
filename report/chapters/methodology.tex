@@ -101,6 +101,9 @@ Movement directions
 
 \clearpage
 
+Non Diagonal - (74, 67) - (55, 40) - 32534.4086
+Diagonal - (74, 67) - (55, 40) - 23247.6747
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=14cm]{task1-compare-single}
@@ -113,6 +116,18 @@ Movement directions
     \includegraphics[width=14cm]{task1-compare}
     \caption[Comparison of multiple square and diagonal simulation steps]{Comparison of multiple square and diagonal simulation steps}
     \label{fig:task1-compare}
+\end{figure}
+
+\clearpage
+
+Average steps factor: 0.7393451245144123
+Average time factor: 2.143568060901476
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task1-factor-length}
+    \caption[Comparison of multiple square and diagonal simulation steps (factor length)]{Comparison of multiple square and diagonal simulation steps (factor length)}
+    \label{fig:task1-factor-length}
 \end{figure}
 
 \clearpage
@@ -179,6 +194,43 @@ You can also use analytical methods to do the same
     \label{fig:task2-1-h-zoom}
 \end{figure}
 
+\begin{center}
+\begin{tabular}{c | c} 
+    h & Error \\
+    \hline
+    100 & 66.69\% \\
+    10 & 5.296\% \\
+    1 & 0.5238\% \\
+    0.1 & 0.05233\% \\
+    0.01 & 0.005233\% \\
+    0.001 & 0.0005239\% \\
+    0.0001 & 5.82e-05\% \\
+    Analytical & 0.0 \\
+\end{tabular}
+\end{center}
+
+\clearpage
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task2-1-t}
+    \caption[Cell growth simulation with different T values]{Cell growth simulation with different T values}
+    \label{fig:task2-1-t}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{c | c c} 
+    T & Cells & \ Full \\
+    \hline
+    2000 & 1.00e+13 & 0.9999\% \\
+    1800 & 1.00e+13 & 0.9998\% \\
+    1600 & 9.99e+12 & 0.9994\% \\
+    1400 & 9.98e+12 & 0.9979\% \\
+    1200 & 9.93e+12 & 0.9931\% \\
+    1000 & 9.77e+12 & 0.9774\% \\    
+\end{tabular}
+\end{center}
+
 \clearpage
 
 \begin{figure}[ht]
@@ -187,6 +239,8 @@ You can also use analytical methods to do the same
     \caption[Cell growth simulation with diagonal movement]{Cell growth simulation with diagonal movement}
     \label{fig:task2-2}
 \end{figure}
+
+\clearpage
 
 \begin{figure}[ht]
     \centering
