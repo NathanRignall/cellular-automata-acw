@@ -13,10 +13,12 @@ fn generate(
         start_position.0, start_position.1, end_position.0, end_position.1
     );
     let mut wtr = csv::Writer::from_path(path).unwrap();
-    wtr.write_record(["length"]).unwrap();
+    wtr.write_record(["length", "time"]).unwrap();
 
     // run the simulation
     for _ in 0..count {
+        let start = std::time::Instant::now();
+
         let positions = automata::simulate::simulate(
             grid_size,
             start_position,
@@ -26,8 +28,11 @@ fn generate(
             true,
         );
 
+        let elapsed = start.elapsed().as_micros();
+
         // write the length of the path to the csv file
-        wtr.write_record(&[positions.len().to_string()]).unwrap();
+        wtr.write_record(&[positions.len().to_string(), elapsed.to_string()])
+            .unwrap();
 
         // put the visited positions in the visited grid
         let mut visited = visited.lock().unwrap();
@@ -46,18 +51,25 @@ fn generate(
         start_position.0, start_position.1, end_position.0, end_position.1
     );
     let mut wtr = csv::Writer::from_path(path).unwrap();
-    wtr.write_record(["length, time"]).unwrap();
+    wtr.write_record(["length", "time"]).unwrap();
     // run the simulation
     for _ in 0..count {
         let start = std::time::Instant::now();
 
-        let positions =
-            automata::simulate::simulate(grid_size, start_position, end_position, iterations, true, true);
+        let positions = automata::simulate::simulate(
+            grid_size,
+            start_position,
+            end_position,
+            iterations,
+            true,
+            true,
+        );
 
         let elapsed = start.elapsed().as_micros();
 
         // write the length of the path to the csv file
-        wtr.write_record(&[positions.len().to_string(), elapsed.to_string()]).unwrap();
+        wtr.write_record(&[positions.len().to_string(), elapsed.to_string()])
+            .unwrap();
 
         // put the visited positions in the visited grid
         let mut visited = visted_diagonal.lock().unwrap();
