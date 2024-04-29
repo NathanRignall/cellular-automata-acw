@@ -95,5 +95,28 @@ fn simulate_grid_size(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, growth_dt, simlate_distance, simulate_grid_size);
+fn move_cell(c: &mut Criterion) {
+    let mut group = c.benchmark_group("move_cell");
+
+    let grid_size = 100;
+    let mut grid = vec![vec![0.0; grid_size]; grid_size];
+    let mut position = (50, 50);
+
+    // test with diagonal on and off
+    group.bench_function("diagonal_on", |b| {
+        b.iter(|| {
+            automata::simulate::move_cell(&mut position, &mut grid, true);
+        });
+    });
+
+    group.bench_function("diagonal_off", |b| {
+        b.iter(|| {
+            automata::simulate::move_cell(&mut position, &mut grid, false);
+        });
+    });
+
+    group.finish();
+}
+
+criterion_group!(benches, growth_dt, simlate_distance, simulate_grid_size, move_cell);
 criterion_main!(benches);
