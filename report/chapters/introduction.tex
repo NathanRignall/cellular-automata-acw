@@ -2,14 +2,15 @@
 
 This report shall show the steps taken to simulate the growth of cancer cells in a tissue using the Gompertz Equation to model growth.
 
-Growth for individual cells can be modelled using a differential equation so that the number of cells is a function of time. The Gompertz Model of Cell Growth works well in this application because it can accurately model the non exponential nature of cell growth \autocite{tatroMathematicsCancerFitting}. Once an area has reached it's capacity no more tumour cells can form, hence the cells must begin to move through a tissue. This movement can be simulated using simple random walk algorithm or more complex genetic algorithms.
+Growth for individual cells can be modelled using a differential equation so that the number of cells is a function of time.
+The Gompertz Model of Cell Growth works well in this application because it can accurately model the non exponential nature of cell growth \autocite{tatroMathematicsCancerFitting}.
+Once an area has reached it's capacity no more tumour cells can form, hence the cells must begin to move through a tissue.
+This movement can be simulated using simple random walk algorithm or more complex genetic algorithms.
 
-This paper specifically shall analyse the computational complexity of such models and evaluate the differences between simulation techniques. The underlying implementation shall be investigated, including random algorithms and accuracy of simulations on computer systems.
+This paper specifically shall analyse the computational complexity of such models and evaluate the differences between simulation techniques.
+The underlying implementation shall be investigated, including random algorithms and accuracy of simulations on computer systems.
 
-\section{Simulation Techniques}
-
-Simulations shall use Rust as the programming language. 
-It is a good choice for this project because it is a low level language that can be used to write high performance code.
-Allows for defined control over types and memory management.
-
-Analysis of data shall be done using Python with Matplotlib and Numpy.
+Simulations shall use Rust as the programming language, for its performance properties as a low level language.
+It also allows for fine control over types, which can be useful for numerical simulations.
+Fine-grained benchmarks shall be used to evaluate the performance of the simulations using the criterion library.
+Analysis of data generated shall be done using Python with Matplotlib and Numpy.

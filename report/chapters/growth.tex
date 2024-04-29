@@ -23,7 +23,7 @@
 
 % \[ N = \dfrac{M}{10^{4e^{-kt}}}  \]
 
-Using the Euler method, we can simulate the differential equation for cell growth in \autoref{fig:task2-1}.
+Using the Euler method, we can simulate the differential equation for cell growth in shown \autoref{fig:task2-1}.
 This uses the rate of growth at a point in time to calculate the number of cells at the next time step.
 
 \begin{figure}[ht]
@@ -34,15 +34,15 @@ This uses the rate of growth at a point in time to calculate the number of cells
 \end{figure}
 
 The growth appears to reach a steady state at around 1200 time units, at this time the percentage of cells filled is 99.31\%.
-Given the growth is modelled using an exponential function, the growth fills 100\% at $t = \infty$,
+Given the growth is modelled using an exponential function, the growth fills to 100\% at $t = \infty$,
 this applies if the simulation has an infinite accuracy.
-At a certain point, the percentage of cells filled will be 100\% as the value is rounded up.
+However on a computer system this value would be rounded up, resulting in a finite time to reach full capacity.
 Steady state can be defined numerically as:
 
 \begin{itemize}
-    \item The percentage of cells filled is near 100\%.
-    \item The rate of change of cell growth is near 0.
-    \item The rate of change of the rate of change of cell growth is near 0.
+    \item Percentage of cells filled is near 100\%.
+    \item Rate of change of cell growth is near 0.
+    \item Rate of change of the rate of change of cell growth is near 0.
 \end{itemize}
 
 \begin{figure}[ht]
@@ -88,95 +88,70 @@ When we reach a value of $t = 1200$, the rate of growth is 4.083e+08, and the ra
 
 \clearpage
 
-\subsection{Changing the Capacity}
-
-Changing the capacity value M for the differential equation will change the rate of growth proportionally.
-\autoref{fig:task2-1-m} displays that at 1200 time units, the percentage of cells filled is 99.31\% across all values of M.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=14cm]{task2-1-m}
-    \caption[Cell growth simulation with different capacity values]{Cell growth simulation with different capacity values}
-    \label{fig:task2-1-m}
-\end{figure}
-
-The different values for M should not change the time to execute the simulation, as the resolution and time steps are the same.
-
-% \[ \frac{dN}{dt}  = kNln\left(\frac{M}{n} \right) \]
-
-% Increasing the value of M will increase the rate of growth.
-
-% Different percentage of cells at the final time for different values of M.
-
-% \begin{center}
-% \begin{tabular}{c | c c} 
-%     M & Cells & Percentage \\
-%     \hline
-%     9 & 1e+09 & 100.00\% \\
-%     10 & 9.983e+09 & 99.83\% \\
-%     11 & 9.966e+10 & 99.66\% \\
-%     12 & 9.949e+11 & 99.49\% \\
-%     13 & 9.931e+12 & 99.31\% \\
-%     14 & 9.914e+13 & 99.14\% \\
-%     15 & 9.897e+14 & 98.97\% \\
-%     16 & 9.88e+15 & 98.80\% \\
-%     17 & 9.863e+16 & 98.63\% \\
-% \end{tabular}
-% \end{center}
-
 \subsection{Accuracy of the Simulation}
 
 % other differentiation methods...
 
 When using the Euler method, the time step size ($h$ or $\Delta t$) is important for the accuracy of the simulation.
 Larger values of $h$ will result in larger computation errors relative to the analytical solution.
-\autoref{fig:task2-1-h} and \autoref{fig:task2-1-h-zoom} show the growth  simulation with different values of $h$.
+\autoref{fig:task2-1-h} shows the growth  simulation with different values of $h$.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=14cm]{task2-1-h}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=14cm]{task2-1-h}
+        \caption[Full simulation]{Full simulation}
+        \label{fig:task2-1-h-full}
+    \end{subfigure}
+
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=14cm]{task2-1-h-zoom}
+        \caption[Zoomed simulation]{Zoomed simulation}
+        \label{fig:task2-1-h-zoom}
+    \end{subfigure}
     \caption[Cell growth simulation with different dt values]{Cell growth simulation with different dt values}
     \label{fig:task2-1-h}
 \end{figure}
 
-\clearpage
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=14cm]{task2-1-h-zoom}
-    \caption[Cell growth simulation with different dt values (zoomed)]{Cell growth simulation with different dt values (zoomed)}
-    \label{fig:task2-1-h-zoom}
-\end{figure}
-
 The mean absolute percentage error for different values of $h$ relative to the analytical solution allows us to determine the optimal value of $h$ for the simulation.
-Smaller values of $h$ result in a more accurate simulation.
+Smaller values of $h$ result in a more accurate simulation, scaling linearly with the error as shown in \autoref{fig:task2-1-h-bar-error}.
 However, smaller values of $h$ also result in a longer computation time.
 
-
-\begin{table}[ht]
+\begin{figure}[!ht]
     \centering
-    \begin{tabular}{c | c} 
-        h & Error \\
-        \hline
-        100 & 66.69\% \\
-        10 & 5.296\% \\
-        1 & 0.5238\% \\
-        0.1 & 0.05233\% \\
-        0.01 & 0.005233\% \\
-        0.001 & 0.0005239\% \\
-        0.0001 & 5.82e-05\% \\
-        Analytical & 0.0 \\
-    \end{tabular}
-    \caption[Cell growth simulation error]{Cell growth simulation error}
-\end{table}
+    \includegraphics[width=14cm]{task2-1-h-bar-error}
+    \caption[Cell growth simulation with different dt values (error)]{Cell growth simulation with different dt values (error)}
+    \label{fig:task2-1-h-bar-error}
+\end{figure}
 
+
+% \begin{table}[ht]
+%     \centering
+%     \begin{tabular}{c | c} 
+%         h & Error \\
+%         \hline
+%         100 & 66.69\% \\
+%         10 & 5.296\% \\
+%         1 & 0.5238\% \\
+%         0.1 & 0.05233\% \\
+%         0.01 & 0.005233\% \\
+%         0.001 & 0.0005239\% \\
+%         0.0001 & 5.82e-05\% \\
+%         Analytical & 0.0 \\
+%     \end{tabular}
+%     \caption[Cell growth simulation error]{Cell growth simulation error}
+% \end{table}
 
 \clearpage
 
 \subsection{Model Complexity}
 
-While the model is of $\bigO(n)$ complexity, the value for $n$ is inversely proportional to the value of $h$ ($N = 1/h \times t$).
-Decreasing $h$ by a factor of 10 will increase the computation time by a factor of 10, this is a reciprocal relationship.
+The growth model is of $\bigO(n)$ complexity, where $n$ is the number of steps.
+However, the value for $n$ is inversely proportional to the value of $h$ ($n = 1/h \times t$).
+
+% Decreasing $h$ by a factor of 10 will increase the computation time by a factor of 10, this is a reciprocal relationship.
 
 % So in terms of h and t, the relationship is linear.
 
@@ -194,8 +169,62 @@ Decreasing $h$ by a factor of 10 will increase the computation time by a factor 
     \label{fig:growth-dt-criterion-lines}
 \end{figure}
 
-Plotting both the value for $h$ and $t$ with logarithmic scales, we can see the relationship between the two values.
-It appears that the relationship is linear.
+By plotting both the value for $h$ and $t$ with logarithmic scales, the reciprocal relationship can be hidden.
+Criterion benchmarks in \autoref{fig:growth-dt-criterion} and \autoref{fig:growth-dt-criterion-lines} show that growth is of $\bigO(n)$ complexity (linear).
+
+
+\clearpage
+
+\subsection{Changing the Capacity}
+
+Changing the capacity value M for the differential equation will change the rate of growth proportionally, as shown in \autoref{fig:task2-1-m}. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task2-1-m}
+    \caption[Cell growth simulation with different capacity values]{Cell growth simulation with different capacity values}
+    \label{fig:task2-1-m}
+\end{figure}
+
+However, this is not perfectly linear, as the rate of growth is logarithmic with respect to the capacity value $M$.
+This is shown in \autoref{fig:task2-1-m-percent} with percentage values.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task2-1-m-percent}
+    \caption[Cell growth simulation with different capacity values (percentage)]{Cell growth simulation with different capacity values (percentage)}
+    \label{fig:task2-1-m-percent}
+\end{figure}
+
+% The different values for M should not change the time to execute the simulation, as the resolution and time steps are the same.
+
+% \[ \frac{dN}{dt}  = kNln\left(\frac{M}{n} \right) \]
+
+% Increasing the value of M will increase the rate of growth.
+
+% Different percentage of cells at the final time for different values of M.
+
+\clearpage
+
+While this difference is very likely the result of the differential equation itself, it is important to check if accuracy is maintained for different values of $M$.
+\autoref{fig:task2-1-m-bar-error} displays that the error increases linearly with the value of $M$.
+This is because the larger values of $M$ use more digits and \verb|float64| only has a precision of 15-16 decimal digits, resulting in a larger error.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task2-1-m-bar-error}
+    \caption[Cell growth simulation with different capacity values (error)]{Cell growth simulation with different capacity values (error) }
+    \label{fig:task2-1-m-bar-error}
+\end{figure}
+
+We can prove the percentage difference is due to the value of $M$ rather than computational error, by plotting the percentage filled in the situation against the analytical solution (\autoref{fig:task2-1-m-bar-percentage}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=14cm]{task2-1-m-bar-percentage}
+    \caption[Cell growth simulation with different capacity values (percentage error)]{Cell growth simulation with different capacity values (percentage error) }
+    \label{fig:task2-1-m-bar-percentage}
+\end{figure}
 
 \clearpage
 
@@ -213,7 +242,7 @@ Given the random walk is independent of the growth model, we can expect the same
 \end{figure}
 
 When the random walk reaches a cell it has already visited, it will instantly move to a new cell as the percentage full will be already above the threshold.
-Hence if the total number cells is plotted, we can expect a linear growth as shown in \autoref{fig:task2-2-total} with 100 walk steps.
+Hence if the total number cells is plotted, we can expect a linear growth as shown in \autoref{fig:task2-2-total-linear} with 100 walk steps.
 This linear growth can be estimated with a linear function, the growth is always at a steady state, until the tissue/grid is full.
 
 % \begin{figure}[ht]
@@ -246,5 +275,6 @@ the graph is plotted against grid area.
 \end{figure}
 
 The relationship between the grid area and the number of steps required to fill the grid is polynomial.
-The growth model and random walk remain complexity of $\bigO(n)$, however the grid size is now a factor in the complexity.
-This added complexity is related to the concept of filling the grid and is of $\bigO(n^2)$ if $n$ is the grid area.
+The growth model and random walk remain complexity of $\bigO(n)$ + $\bigO(n)$ = $\bigO(n)$,
+however the grid size is now a factor in the complexity.
+This added complexity is related to the concept of filling the grid and is of $\bigO(n^3)$ if $n$ is the grid width.

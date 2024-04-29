@@ -2,6 +2,6 @@
 \subject{600093 - Computational Science}
 \title{Cellular Automata}
 \author{Nathan Rignall}
-\immediate\write18{texcount -1 -inc -sum -relaxed report.tex > wordcount.aux }
+\immediate\write18{./wordcount.sh > wordcount.aux }
 \date{\today\\ Word count: \input{wordcount.aux}}
 \maketitle

@@ -2,30 +2,36 @@
 
 % 5 marks for definitions of distributions and reasons behind the choice of distribution
 
-The random movement of cells should be modelled using a probability distribution
+The random movement of cells can be modelled using a probability distribution.
+There are several probability distributions that can be classified as discrete or continuous, we will analyse uniform and bernoulli.
+The uniform distribution is usually regarded as a continuous distribution but can also be used to model discrete variables,
+all values are equally likely to be selected.
+% hence it is a good choice for the random movement of cells.
+The Bernoulli distribution is a discrete distribution that models a single trial with two outcomes,
+the probability of the two outcomes is $p$ and $1-p$.
+% hence it is not suitable for the random movement of cells.
 
-There are several probability distributions that can be classified as discrete or continuous, we will analyse uniform, bernoulli and beta.
+% The Beta distribution is a continuous distribution that models the probability of a value between 0 and 1.
 
-The uniform distribution is usually regarded as a continuous distribution but can also be used to model discrete variables. 
+% Area under the graph is one
 
-Area under the graph is one
+% \[ f(x) =\begin{cases}a & \text{if } x = 1\\b & \text{if } x = 0\end{cases}\]
 
-\[ f(x) =\begin{cases}a & \text{if } x = 1\\b & \text{if } x = 0\end{cases}\]
+% \[ f(x) =\begin{cases}1 & \text{for } 0  \leq x  \leq  1\\0 & \text{otherwise}\end{cases}\]
 
-\[ f(x) =\begin{cases}1 & \text{for } 0  \leq x  \leq  1\\0 & \text{otherwise}\end{cases}\]
+% Uniform distribution
+% Definition of distributions
+% Uniform distributions
+% Bernoulli Distribution
 
-Uniform distribution
-Definition of distributions
-Uniform distributions
-Bernoulli Distribution
+% Bias introduced with different distributions
 
-Bias introduced with different distributions
+When all directions are equally probable a uniform distribution should be used.
+If a Bernoulli distribution was selected, it would introduce a bias to the direction of movement.
+This could be desired in a complex model where factors such as surface tension affect the direction taken by the cell.
 
-
-When all directions are equally probable a uniform distribution could be used.
-
-If a Bernoulli distribution was selected, it would introduce a bias to the direction of movement
-This could be desired in a complex model where factors such as surface tension affect the direction of movement
+The algorithm for random walk shall generate a list of available directions and select one at random.
+Two different methods of movement shall be compared, a square movement and a diagonal movement.
 
 % how random numbers are actually generated in rust
 
@@ -36,24 +42,20 @@ This could be desired in a complex model where factors such as surface tension a
 
 % 'Complexity of direction methods'
 
-\clearpage
+\subsection{Simulation Plots}
 
-Both directions have bias
+Both directions have bias; square moves to right, diagonal moves down .
+This is because it is a single run and the number generation is random, hence direction is random.
+In \autoref{fig:task1} both plots show the same number of steps, but the diagonal plot moves further than the square plot.
 
-Square goes to right, diagonal goes down 
-
-This is because it is a single step run, the number generation is random, hence direction is random
-
-100 steps, diagonal moves further than square
-
-\begin{figure}[ht]
+\begin{figure}[!ht]
     \centering
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.4\textwidth}
     	\includegraphics[width=\textwidth]{task1-1}
     	\caption[Square]{Square}
     	\label{fig:task1-1}
     \end{subfigure}
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.4\textwidth}
     	\includegraphics[width=\textwidth]{task1-2}
     	\caption[Diagonal]{Diagonal}
     	\label{fig:task1-2}
@@ -68,13 +70,14 @@ This is because it is a single step run, the number generation is random, hence 
 
 The movement of the cells can be visualised using a heatmap to show the validate the uniform distribution of the movement.
 A number of start and end points can be selected using another uniform distribution.
-Next the random walk can execute until the end point is reached, this process can be repeated multiple times to gather a mean and record the visited cells.
+Next the random walk can execute until the end point is reached (\autoref{fig:task1-fill}),
+this process can be repeated multiple times to gather a mean and record the visited cells.
 
 
 The results are shown in \autoref{fig:task1-visited}, there are small hotspots but overall the distribution is uniform.
 With more iterations, the distribution would become more even.
-This validates the uniform distribution of both the square and diagonal movements,
-and validates the uniform distribution of the random start and end points
+This validates the uniform distribution of both the square and diagonal movements.
+% and validates the uniform distribution of the random start and end points
 
 \begin{figure}[ht]
     \centering
@@ -141,6 +144,9 @@ However, this is different from computational complexity, where the square movem
 
 Using criterion, the computational complexity of the different movements can be measured.
 The results are shown in \autoref{fig:move-cell-criterion}.
+Square movement takes $16.2ns$ compared to diagonal movement which takes $42.7ns$, 
+this is a ratio of 0.3794.
+Hence, diagonal movement is more computationally complex than square movement.
 
 \begin{figure}[ht]
     \centering
@@ -149,12 +155,12 @@ The results are shown in \autoref{fig:move-cell-criterion}.
     \label{fig:move-cell-criterion}
 \end{figure}
 
-Square movement takes $16.2ns$ compared to diagonal movement which takes $42.7ns$, 
-this is a ratio of 0.3794.
-Hence, diagonal movement is more computationally complex than square movement.
+
 
 This is because the diagonal movement requires more checks to ensure the cell does not move off the grid.
 The act of generating a random number is the same for both movements as a single random number is generated to determine the direction of movement, regardless of the movement method.
+
+As single move is of complexity $O(1)$, the complexity of multiple moves is $O(n)$ where $n$ is the number of steps taken.
 
 \clearpage
 
@@ -183,12 +189,12 @@ Given enough iterations, the average should stabilise and the difference in the 
     \label{fig:task1-compare-roll}
 \end{figure}
 
-\autoref{fig:task1-compare-roll} shows the number of steps taken by the square and diagonal movements for a single simulation with start and end points of (74, 67) and (55, 40).
+\autoref{fig:task1-compare-roll} shows the number of steps taken by the square and diagonal movements for a single simulation with start and end points of (42, 28) and (29, 74).
 
 % Diagonal - (42, 28) - (29, 74)
 
 As suggested in the previous sections, the diagonal movement takes less steps than the square movement to reach the end point.
-However, the diagonal movement takes longer to complete than the square movement as the computational complexity is higher.
+However, the diagonal movement takes longer (time) as the computational complexity is higher.
 
 % Plotting on to the same graph...
 
