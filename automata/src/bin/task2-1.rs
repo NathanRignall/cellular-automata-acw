@@ -8,7 +8,7 @@ fn main() {
     let m: f64 = 10_000_000_000_000.0;
     let dt: f64 = 0.001;
     let initial_n: f64 = 1_000_000_000.0;
-    let t_final = (1200.0 / dt) as usize;
+    let t_final = (2000.0 / dt) as usize;
 
     // initialize an array to store the number of cells
     let mut n: Vec<f64> = vec![0.0; t_final];

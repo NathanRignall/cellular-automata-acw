@@ -11,12 +11,8 @@ fn generate(power: i32) {
     let initial_n: f64 = 1_000_000_000.0;
     let t_final = (1200.0 / dt) as usize;
 
-    // initialize an array to store the number of cells
-    let mut n: Vec<f64> = vec![0.0; t_final];
-    n[0] = initial_n;
-
     // euler method to solve the differential equation
-    n = automata::growth::simulate(k, m, dt, initial_n, t_final);
+    let n = automata::growth::simulate(k, m, dt, initial_n, t_final);
 
     // write the results to the csv file
     for (i, cells) in n.iter().enumerate() {
