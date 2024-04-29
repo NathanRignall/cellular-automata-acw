@@ -71,3 +71,41 @@ pub fn simulate_distance(
     }
     positions
 }
+
+pub fn simulate_full(
+    grid_size: usize,
+    start_position: (usize, usize),
+    max_iterations: usize,
+    diagonal: bool,
+    finish: bool,
+) -> Vec<(usize, usize)> {
+    // create a grid of cells 100x100 which are bool and set to false
+    let mut grid = vec![vec![0.0; grid_size]; grid_size];
+    let mut position = start_position;
+    grid[position.0][position.1] = 1.0;
+
+    // loop for n iterations
+    let mut positions = Vec::new();
+    for _ in 0..max_iterations {
+        // simulate the movement of the cells
+        move_cell(&mut position, &mut grid, diagonal);
+
+        // update the grid
+        grid[position.0][position.1] = 1.0;
+
+        // store the position
+        positions.push(position);
+
+        // check if every cell has been visited
+        if grid.iter().all(|row| row.iter().all(|&cell| cell == 1.0)) && finish {
+            break;
+        }
+
+        // check if reached maximum iterations
+        if positions.len() == max_iterations {
+            println!("Maximum iterations reached {}", grid_size);
+            break;
+        }
+    }
+    positions
+}
