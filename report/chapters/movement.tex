@@ -64,17 +64,17 @@ This is because it is a single step run, the number generation is random, hence 
 
 \clearpage
 
-By mapping the visited cells, we can see the difference in the movement of the cells across thousands of steps to validate the evenness of the uniform distribution.
+\subsection{Simulation Heatmap}
 
-Select random start and end points using a uniform distribution, iterate until end point is reached
+The movement of the cells can be visualised using a heatmap to show the validate the uniform distribution of the movement.
+A number of start and end points can be selected using another uniform distribution.
+Next the random walk can execute until the end point is reached, this process can be repeated multiple times to gather a mean and record the visited cells.
 
-Small hotspots, but overall even distribution
 
-With more iterations, the distribution will be more even
-
-Validates the uniform distribution of both the square and diagonal movements
-
-And validates the uniform distribution of the random start and end points
+The results are shown in \autoref{fig:task1-visited}, there are small hotspots but overall the distribution is uniform.
+With more iterations, the distribution would become more even.
+This validates the uniform distribution of both the square and diagonal movements,
+and validates the uniform distribution of the random start and end points
 
 \begin{figure}[ht]
     \centering
@@ -93,22 +93,17 @@ And validates the uniform distribution of the random start and end points
 \end{figure}
 
 There is a significant difference in the number of visited cells between the square and diagonal movements.
-
 This is because the diagonal movement can move further in a single step than the square movement.
 
 The square can perform one step to the left, right, up or down.
-
 The diagonal can perform one step to the left, right, up, down, up-left, up-right, down-left or down-right.
-Any diagonal movement is equivalent to two square movements.
+Any diagonal movement is equivalent to $\sqrt{1^2 + 1^2} = \sqrt{2}$ square movements.
 
 Hence square movement is on average $(1 \times 4) / 4 = 1$ steps
-
 The diagonal movement is on average $(\sqrt{2} \times 4 + 1 \times 4) / 8 = 1.2071$ steps
-
 Square is factor of $1 / 1.2071 = 0.8284$ compared to diagonal
 
 Hence in the scene of moving from one point to another, the diagonal movement is more efficient than the square movement.
-
 However, this is different from computational complexity, where the square movement is more efficient than the diagonal movement.
 
 % TODO - explain the computational complexity of the different movements
@@ -124,52 +119,51 @@ However, this is different from computational complexity, where the square movem
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=10cm]{task1-1-fill}
-    \caption[Square cell movement plot with fill]{Square cell movement plot with fill}
-    \label{fig:task1-1-fill}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{task1-2-fill}
-    \caption[Diagonal cell movement plot with fill]{Diagonal cell movement plot with fill}
-    \label{fig:task1-2-fill}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=10cm]{task1-1-fill}
+        \caption[Square]{Square}
+        \label{fig:task1-1-fill}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=10cm]{task1-2-fill}
+        \caption[Diagonal]{Diagonal}
+        \label{fig:task1-2-fill}
+    \end{subfigure}
+    \caption[Cell movement fill plots]{Cell movement fill plots}
+    \label{fig:task1-fill}
 \end{figure}
 
 \clearpage
 
-Measure the computational complexity of the different movements.
+\subsection{Movement Complexity}
+
+Using criterion, the computational complexity of the different movements can be measured.
+The results are shown in \autoref{fig:move-cell-criterion}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=14cm]{move-cell-criterion}
+    \includegraphics[width=\textwidth, clip, trim=4cm 12cm 1cm 11cm]{move-cell-criterion}
     \caption[Cell movement criterion]{Cell movement criterion}
     \label{fig:move-cell-criterion}
 \end{figure}
 
-Square takes 16.2ns
-
-Diagonal takes 42.7ns
-
-This is a ratio of 0.3794
-
-Diagonal movement is more computationally complex than square movement.
+Square movement takes $16.2ns$ compared to diagonal movement which takes $42.7ns$, 
+this is a ratio of 0.3794.
+Hence, diagonal movement is more computationally complex than square movement.
 
 This is because the diagonal movement requires more checks to ensure the cell does not move off the grid.
-
 The act of generating a random number is the same for both movements as a single random number is generated to determine the direction of movement, regardless of the movement method.
 
 \clearpage
 
-By selecting a random start and end point, we can compare the number of steps taken by the square and diagonal movements.
+\subsection{Simulation Steps}
 
-If this movement simulation is performed multiple times, the average number of steps taken by the square and diagonal movements can be compared.
+By selecting a random start and end point, we can compare the number of steps and time taken by the square and diagonal movements.
+If this movement simulation is performed multiple times, the average number of steps and time taken by the square and diagonal movements can be compared.
 
-Given enough iterations, the average should stabilise and the difference in the number of steps taken by the square and diagonal movements can be calculated.
-
-Non Diagonal - (74, 67) - (55, 40) - 32534.4086
-
-Diagonal - (74, 67) - (55, 40) - 23247.6747
+Given enough iterations, the average should stabilise and the difference in the number of steps and time taken by the square and diagonal movements can be calculated.
 
 \begin{figure}[ht]
     \centering
@@ -189,25 +183,29 @@ Diagonal - (74, 67) - (55, 40) - 23247.6747
     \label{fig:task1-compare-roll}
 \end{figure}
 
-Plotting on to the same graph...
+\autoref{fig:task1-compare-roll} shows the number of steps taken by the square and diagonal movements for a single simulation with start and end points of (74, 67) and (55, 40).
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=14cm]{task1-compare-single}
-    \caption[Comparison of square and diagonal simulation steps]{Comparison of square and diagonal simulation steps}
-    \label{fig:task1-compare-single}
-\end{figure}
+% Diagonal - (42, 28) - (29, 74)
+
+As suggested in the previous sections, the diagonal movement takes less steps than the square movement to reach the end point.
+However, the diagonal movement takes longer to complete than the square movement as the computational complexity is higher.
+
+% Plotting on to the same graph...
+
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=14cm]{task1-compare-single}
+%     \caption[Comparison of square and diagonal simulation steps]{Comparison of square and diagonal simulation steps}
+%     \label{fig:task1-compare-single}
+% \end{figure}
 
 \clearpage
 
-Taking the same process and applying it to multiple different start and end points 
+By taking the same process and applying it to a random selection of start and end points, 
+the average number of steps and time taken by the square and diagonal movements can be compared for different distances travelled.
 
-Measure the average number of steps taken by the square and diagonal movements for a given distance between the start and end points.
-
-Also measure the average time taken by the movements.
-
+% By also measuring the time taken for the simulation to complete allows the computational complexity of the different movements to be compared.
 % By plotting the average number of steps against the distance between the start and end points...
-
 % we can establish an average difference in the number of steps taken by the square and diagonal movements.
 
 
@@ -218,7 +216,8 @@ Also measure the average time taken by the movements.
     \label{fig:task1-compare}
 \end{figure}
 
-Next, by plotting the ratio of the average number of steps taken by the square and diagonal movements we can establish a factor by which the diagonal movement is more efficient than the square movement.
+Next, by plotting the ratio of the average number of steps and time taken by the square and diagonal movements
+we can establish a factor by which the diagonal movement is more efficient than the square movement.
 
 \begin{figure}[ht]
     \centering
@@ -228,17 +227,12 @@ Next, by plotting the ratio of the average number of steps taken by the square a
 \end{figure}
 
 The average factor for simulation steps is 0.7393 which is within the order of magnitude of the expected factor of 0.8284.
+The discrepancy is likley due to the non-linear behaviour in the interactions at the edge of the grid to prevent the cells from moving off the grid.
 
-The discrepancy is ilkley due to additional factors such as the size of the grid and the number of iterations.
-Non linear behaviour from the interactions at the edge of the grid to prevent the cells from moving off the grid.
-
-
-The average factor for simulation time is 2.1436
-
+The average factor for simulation time is 2.1436.
 Given the square movement is 0.3794 times faster than the diagonal movement,
 and the diagonal movement takes 0.8284 times as many steps as the square movement,
 the expected factor for simulation time is $0.3794 \times 0.8284 = 2.184$.
-
 This is exceptionally close to the measured factor of 2.1436.
 
 % Average steps factor: 0.7393451245144123
