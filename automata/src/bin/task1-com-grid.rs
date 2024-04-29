@@ -63,7 +63,11 @@ fn main() {
     let iterations = 1000000;
     let count = 10000;
 
-    let grid_sizes = vec![(10, (5,5)), (20, (10,10)), (30, (15,15)), (40, (20,20)), (50, (25,25))];
+    // create a vector of grid sizes and start positions from 10 to 100 at intervals of 2 (start position in middle)
+    let grid_sizes = (10..=100)
+        .step_by(2)
+        .map(|size| (size, (size / 2, size / 2)))
+        .collect::<Vec<(usize, (usize, usize))>>();
 
     // array to store threads
     let mut threads = Vec::new();
