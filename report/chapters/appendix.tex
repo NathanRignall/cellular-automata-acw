@@ -1,12 +1,25 @@
 \chapter{Appendix}
 
+\section{Random Numbers} \label{sec:random}
+
+The random numbers used in this simulation were generated using the Rust \verb|rand| crate \autocite{rustRustrandomRand2024}.
+
+Random numbers in a computer system are never truly random, they are generated using a pseudo-random number generator that use a source of entropy to generate a sequence of numbers that appear random.
+Entropy is a source of randomness that is used to seed the pseudo-random number generator \autocite{mertensEntropyPseudorandomnumberGenerators2004}.
+The better the source of entropy, the more random the numbers will appear.
+
+The \verb|rand| crate uses the \verb|SmallRng| function to generate pseudo-random numbers.
+The crate also has support for generating cryptographically secure random numbers using other functions such as \verb|StdRng|.
+Cryptographically generated numbers come at a performance cost, so they are not used in this simulation.
+
+
 \section{Code Snippets} \label{sec:code}
 
 \begin{lstlisting}[caption=Move Cell (Rust), label={lst:moveCell},captionpos=b]
 pub fn move_cell(position: &mut (usize, usize), 
   grid: &mut Vec<Vec<f64>>, diagonal: bool) {
 
-  // move the cell
+  // get available positions
   let available_positions = {
       if diagonal {
           crate::position::available_diagonal(*position, grid)
@@ -15,11 +28,14 @@ pub fn move_cell(position: &mut (usize, usize),
       }
   };
 
+  // randomly select a new position
   let random_position = rand::random::<usize>() % available_positions.len();
   *position = available_positions[random_position];
   grid[position.0][position.1] = 1.0;
 }
 \end{lstlisting}
+
+\clearpage
 
 \begin{lstlisting}[caption=Available Normal (Rust), label={lst:availableNormal},captionpos=b]
   pub fn available_normal(position: (usize, usize),
@@ -38,7 +54,6 @@ pub fn move_cell(position: &mut (usize, usize),
 }
 \end{lstlisting}
 
-\clearpage
 
 \begin{lstlisting}[caption=Available Diagonal (Rust), label={lst:availableDiagonal},captionpos=b]
 pub fn available_diagonal(position: (usize, usize)

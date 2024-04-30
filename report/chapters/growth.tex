@@ -215,7 +215,7 @@ This is shown in \autoref{fig:task2-1-m-percent} with percentage values.
 
 While this difference is very likely the result of the differential equation itself, it is important to check if accuracy is maintained for different values of $M$.
 \autoref{fig:task2-1-m-bar-error} displays that the error increases linearly with the value of $M$.
-This is because the larger values of $M$ use more digits and \verb|float64| only has a precision of 15-16 decimal digits.
+This is because the larger values of $M$ occupy more digits of the \verb|float64| data type, which only has a precision of 15-16 digits.
 We can prove the percentage difference is due to the value of $M$ rather than computational error,
 by plotting the percentage filled against the analytical solution (\autoref{fig:task2-1-m-bar-percentage}).
 
