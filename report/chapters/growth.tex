@@ -23,8 +23,15 @@
 
 % \[ N = \dfrac{M}{10^{4e^{-kt}}}  \]
 
-Using the Euler method, we can simulate the differential equation for cell growth in shown \autoref{fig:task2-1}.
+Using the Euler method, we can simulate the differential equation for cell growth shown in \autoref{fig:task2-1}.
 This uses the rate of growth at a point in time to calculate the number of cells at the next time step.
+
+\setlength{\belowdisplayskip}{0pt} \setlength{\belowdisplayshortskip}{0pt}
+\setlength{\abovedisplayskip}{0pt} \setlength{\abovedisplayshortskip}{0pt}
+
+\begin{align*}
+    M &= 10^{13} & k &= 0.06 & N &= 10^9 & 0 \leq t \leq 1200
+\end{align*}
 
 \begin{figure}[ht]
     \centering
@@ -117,7 +124,6 @@ Larger values of $h$ will result in larger computation errors relative to the an
 
 The mean absolute percentage error for different values of $h$ relative to the analytical solution allows us to determine the optimal value of $h$ for the simulation.
 Smaller values of $h$ result in a more accurate simulation, scaling linearly with the error as shown in \autoref{fig:task2-1-h-bar-error}.
-However, smaller values of $h$ also result in a longer computation time.
 
 \begin{figure}[!ht]
     \centering
@@ -149,7 +155,8 @@ However, smaller values of $h$ also result in a longer computation time.
 \subsection{Model Complexity}
 
 The growth model is of $\bigO(n)$ complexity, where $n$ is the number of steps.
-However, the value for $n$ is inversely proportional to the value of $h$ ($n = 1/h \times t$).
+However, the value for $n$ is inversely proportional to the value of $h$ ($n = 1/h \times t$), 
+smaller values of $h$ result in a longer computation time.
 
 % Decreasing $h$ by a factor of 10 will increase the computation time by a factor of 10, this is a reciprocal relationship.
 
@@ -165,7 +172,7 @@ However, the value for $n$ is inversely proportional to the value of $h$ ($n = 1
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth, clip, trim=1cm 0.1cm 5cm 2.2cm]{growth-dt-criterion-lines}
-    \caption[Cell growth criterion]{Cell growth criterion}
+    \caption[Cell growth criterion (line)]{Cell growth criterion (line)}
     \label{fig:growth-dt-criterion-lines}
 \end{figure}
 

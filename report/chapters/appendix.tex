@@ -1,6 +1,8 @@
 \chapter{Appendix}
 
-Integration using substitution
+\section{Integration of Growth Model} \label{sec:substitution}
+
+Integrate using substitution:
 
 \begin{eqnarray*}
 \frac{dN}{dt}                                &=& kNln\left(\frac{M}{N} \right) \\
@@ -24,9 +26,10 @@ ln\left(\dfrac{M}{N}\right) &=& e^{-kt - c} \\
 N                           &=& \dfrac{M}{e^{e^{-kt - c}}}
 \end{eqnarray*}
 
+
 \clearpage
 
-Calculate c using the initial values
+Calculate c using the initial values provided:
 
 \begin{align*}
     M &= 10^{13} & k &= 0.06 & N &= 10^9 & t &= 0
@@ -40,7 +43,7 @@ e^{e^{-c}}  &=& {10^4} \\
 c           &=& -ln\left(\left|\ln\left({10^4}\right)\right|\right) \\
 \end{eqnarray*}
 
-Substitute c back in and simplify
+Substitute c back into the equation and simplify:
 
 \begin{eqnarray*}
 N &=& \dfrac{M}{e^{e^{-kt + ln\left(\left|\ln\left({10^4}\right)\right|\right)}}} \\
