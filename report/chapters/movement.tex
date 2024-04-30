@@ -3,7 +3,7 @@
 % 5 marks for definitions of distributions and reasons behind the choice of distribution
 
 The random movement of cells can be modelled using a probability distribution.
-Probability distributions that can be classified as discrete or continuous, we will analyse uniform and bernoulli type distributions.
+Probability distributions that can be classified as discrete or continuous, we will assess uniform and Bernoulli type distributions.
 The uniform distribution is usually regarded as a continuous distribution but can also be used to model discrete variables,
 all values are equally likely to be selected.
 % hence it is a good choice for the random movement of cells.
@@ -61,7 +61,7 @@ In \autoref{fig:task1} both plots show the same number of steps, but the diagona
 
 \subsection{Simulation Heatmap}
 
-The movement of the cells can be visualised using a heatmap.
+The movement of the cells can be visualized using a heatmap.
 A number of start and end points can be selected using another uniform distribution.
 Next the random walk can execute until the end point is reached (\autoref{fig:task1-fill}),
 this process can be repeated multiple times to record the visited cells.
@@ -161,7 +161,7 @@ As single move is of complexity $O(1)$, the complexity of multiple moves is $O(n
 By selecting a random start and end point, we can compare the number of steps and time taken by the square and diagonal movements directly.
 If this movement simulation is performed multiple times, the average number of steps and time taken by the two movements can be compared.
 
-Given enough iterations, the average should stabilise and the difference in the number of steps and time taken by the square and diagonal movements can be calculated.
+Given enough iterations, the average should stabilize and the difference in the number of steps and time taken by the square and diagonal movements can be calculated.
 
 \begin{figure}[ht]
     \centering
@@ -225,7 +225,7 @@ we can establish a factor by which the diagonal movement is more efficient than 
 \end{figure}
 
 The average factor for simulation steps is 0.7393 which is within the order of magnitude of the expected factor of 0.8284.
-The discrepancy is likley due to the non-linear nature of the interactions at the edge of the grid.
+The discrepancy is likely due to the non-linear nature of the interactions at the edge of the grid.
 
 The average factor for simulation time is 2.1436.
 Given the square movement is 0.3794 times faster than the diagonal movement,

@@ -4,14 +4,14 @@ This report shall show the steps taken to simulate the growth of cancer cells in
 
 Growth for individual cells can be modelled using a differential equation so that the number of cells is a function of time, shown in Equation \ref{eq:1}.
 The Gompertz Model of Cell Growth works well in this application because it can accurately model the non exponential nature of cell growth \autocite{tatroMathematicsCancerFitting2018}.
-Once an area has reached it's capacity no more tumour cells can form, hence the cells must begin to move through a tissue.
+Once an area has reached it's capacity no more tumor cells can form, hence the cells must begin to move through a tissue.
 This movement can be simulated using simple random walk algorithms \autocite{codlingRandomWalkModels2008}.
 
 \begin{equation}
     \frac{dN}{dt} = kNln\left(\frac{M}{N} \right) \label{eq:1}
 \end{equation}
 
-This paper specifically shall analyse the computational complexity of such models and evaluate the differences between simulation techniques.
+This paper specifically shall analyze the computational complexity of such models and evaluate the differences between simulation techniques.
 The underlying implementation shall be investigated, including random algorithms and accuracy of simulations on computer systems.
 
 Simulations shall use Rust as the programming language, for its performance properties as a low level language \autocite{adamRustConciseOverview2023}.
