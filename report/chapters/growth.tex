@@ -203,7 +203,7 @@ This is shown in \autoref{fig:task2-1-m-percent} with percentage values.
     \label{fig:task2-1-m-percent}
 \end{figure}
 
-% The different values for M should not change the time to execute the simulation, as the resolution and time steps are the same.
+\clearpage
 
 % \[ \frac{dN}{dt}  = kNln\left(\frac{M}{n} \right) \]
 
@@ -211,11 +211,12 @@ This is shown in \autoref{fig:task2-1-m-percent} with percentage values.
 
 % Different percentage of cells at the final time for different values of M.
 
-\clearpage
 
 While this difference is very likely the result of the differential equation itself, it is important to check if accuracy is maintained for different values of $M$.
 \autoref{fig:task2-1-m-bar-error} displays that the error increases linearly with the value of $M$.
-This is because the larger values of $M$ use more digits and \verb|float64| only has a precision of 15-16 decimal digits, resulting in a larger error.
+This is because the larger values of $M$ use more digits and \verb|float64| only has a precision of 15-16 decimal digits.
+We can prove the percentage difference is due to the value of $M$ rather than computational error,
+by plotting the percentage filled against the analytical solution (\autoref{fig:task2-1-m-bar-percentage}).
 
 \begin{figure}[ht]
     \centering
@@ -224,14 +225,25 @@ This is because the larger values of $M$ use more digits and \verb|float64| only
     \label{fig:task2-1-m-bar-error}
 \end{figure}
 
-We can prove the percentage difference is due to the value of $M$ rather than computational error, by plotting the percentage filled in the situation against the analytical solution (\autoref{fig:task2-1-m-bar-percentage}).
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=14cm]{task2-1-m-bar-percentage}
     \caption[Cell growth simulation with different capacity values (percentage error)]{Cell growth simulation with different capacity values (percentage error) }
     \label{fig:task2-1-m-bar-percentage}
 \end{figure}
+
+The different values for $M$ do not significantly change the time to execute, as the resolution and time steps are the same (\autoref{fig:growth-m-criterion}).
+This is not the case for $M=10^9$ as the initial capacity is $10^9$.
+When performing the $dN/dt$ calculation, the result is zero.
+Multiplications by zero are faster than multiplications by other values, hence the simulation is faster.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth, clip, trim=4cm 6cm 1cm 8cm]{growth-m-criterion}
+    \caption[Cell growth criterion (m)]{Cell growth criterion (m) }
+    \label{fig:growth-m-criterion}
+\end{figure}
+
 
 \clearpage
 
@@ -250,7 +262,7 @@ Given the random walk is independent of the growth model, we can expect the same
 
 When the random walk reaches a cell it has already visited, it will instantly move to a new cell as the percentage full will be already above the threshold.
 Hence if the total number cells is plotted, we can expect a linear growth as shown in \autoref{fig:task2-2-total-linear} with 100 walk steps.
-This linear growth can be estimated with a linear function, the growth is always at a steady state, until the tissue/grid is full.
+This linear growth can be estimated with a linear function at a steady state, until the tissue/grid is full.
 
 % \begin{figure}[ht]
 %     \centering
