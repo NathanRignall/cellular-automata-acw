@@ -1,5 +1,103 @@
 \chapter{Appendix}
 
+\section{Code Snippets} \label{sec:code}
+
+\begin{lstlisting}[caption=Move Cell (Rust), label={lst:moveCell},captionpos=b]
+pub fn move_cell(position: &mut (usize, usize), 
+  grid: &mut Vec<Vec<f64>>, diagonal: bool) {
+
+  // move the cell
+  let available_positions = {
+      if diagonal {
+          crate::position::available_diagonal(*position, grid)
+      } else {
+          crate::position::available_normal(*position, grid)
+      }
+  };
+
+  let random_position = rand::random::<usize>() % available_positions.len();
+  *position = available_positions[random_position];
+  grid[position.0][position.1] = 1.0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Available Normal (Rust), label={lst:availableNormal},captionpos=b]
+  pub fn available_normal(position: (usize, usize),
+    grid: &Vec<Vec<f64>>) -> Vec<(usize, usize)> {
+
+    let (x, y) = position;
+    let mut positions = Vec::new();
+
+    // check up down left right
+    if x > 0 { positions.push((x - 1, y)); }
+    if x < grid.len() - 1 { positions.push((x + 1, y)); }
+    if y > 0 { positions.push((x, y - 1)); }
+    if y < grid[0].len() - 1 { positions.push((x, y + 1));}
+
+    positions
+}
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[caption=Available Diagonal (Rust), label={lst:availableDiagonal},captionpos=b]
+pub fn available_diagonal(position: (usize, usize)
+  grid: &Vec<Vec<f64>>) -> Vec<(usize, usize)> {
+
+  let (x, y) = position;
+  let mut positions = Vec::new();
+
+  // check up down left right
+  if x > 0 { positions.push((x - 1, y)); }
+  if x < grid.len() - 1 { positions.push((x + 1, y)); }
+  if y > 0 { positions.push((x, y - 1)); }
+  if y < grid[0].len() - 1 { positions.push((x, y + 1)); }
+
+  // check diagonals
+  if x > 0 && y > 0 { positions.push((x - 1, y - 1)); }
+  if x > 0 && y < grid[0].len() - 1 { positions.push((x - 1, y + 1)); }
+  if x < grid.len() - 1 && y > 0 { positions.push((x + 1, y - 1)); }
+  if x < grid.len() - 1 && y < grid[0].len() - 1 { 
+    positions.push((x + 1, y + 1)); }
+
+  positions
+}
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[caption=Growth Model (Rust), label={lst:growthModel},captionpos=b]
+pub fn simulate(k: f64, m: f64, dt: f64, initial_n: f64,
+  t_final: usize, condition: bool) -> Vec<f64> {
+    
+  // initialize an array to store the number of cells
+  let mut n: Vec<f64> = vec![0.0; t_final];
+  n[0] = initial_n;
+  let mut t_current: usize = 0;
+
+  // euler method to solve the differential equation
+  for i in 1..t_final {
+      t_current = i;
+
+      // perform the euler method
+      let dn_dt = k * n[i - 1] * (m / n[i - 1]).ln();
+      n[i] = n[i - 1] + dn_dt * dt;
+
+      // exit early if dn_dt is greater than 99.31% of m
+      if n[i] >= 0.9931 * m && condition {
+          break;
+      }
+  }
+  
+  // slice the array to the current time
+  n.truncate(t_current);
+  n
+}
+\end{lstlisting}
+
+
+\clearpage
+
 \section{Integration of Growth Model} \label{sec:substitution}
 
 Integrate using substitution:

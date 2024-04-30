@@ -3,7 +3,7 @@
 % 5 marks for definitions of distributions and reasons behind the choice of distribution
 
 The random movement of cells can be modelled using a probability distribution.
-Probability distributions that can be classified as discrete or continuous, we will assess uniform and Bernoulli type distributions.
+Probability distributions can be classified as discrete or continuous, we will assess uniform and Bernoulli type distributions.
 The uniform distribution is usually regarded as a continuous distribution but can also be used to model discrete variables,
 all values are equally likely to be selected.
 % hence it is a good choice for the random movement of cells.
@@ -30,16 +30,16 @@ When all directions are equally probable a uniform distribution should be used.
 If a Bernoulli distribution was selected, it would introduce a bias to the direction of movement.
 This could be desired in a complex model where factors such as surface tension affect the direction taken by the cell.
 
-The algorithm for random walk shall generate a list of available directions and select one at random.
+The algorithm for random walk shall generate a list of available directions (\autoref{lst:moveCell}) and select one at random (\autoref{lst:availableNormal} and \autoref{lst:availableDiagonal}).
 Two different methods of movement shall be compared, a square movement and a diagonal movement.
 
 % how random numbers are actually generated in rust
 
 \subsection{Simulation Plots}
 
-Both directions have bias; square moves to the right, diagonal moves downwards.
-This is because the number generation is random, hence direction is random.
-In \autoref{fig:task1} both plots show the same number of steps, but the diagonal plot moves further than the square plot.
+Both directions have bias, square moves to the right and diagonal moves downwards.
+This is because the number generation is random and hence direction is random.
+In \autoref{fig:task1} the plots show the same number of steps (100), but the diagonal plot moves further than the square plot.
 
 \begin{figure}[!ht]
     \centering
@@ -62,14 +62,14 @@ In \autoref{fig:task1} both plots show the same number of steps, but the diagona
 \subsection{Simulation Heatmap}
 
 The movement of the cells can be visualized using a heatmap.
-A number of start and end points can be selected using another uniform distribution.
+Several and end points can be selected using another uniform distribution.
 Next the random walk can execute until the end point is reached (\autoref{fig:task1-fill}),
 this process can be repeated multiple times to record the visited cells.
 
 
-The results are shown in \autoref{fig:task1-visited}, there are small hotspots but overall the distribution is uniform.
+The results are shown in \autoref{fig:task1-visited}, there are small hotspots but overall, the distribution is uniform.
 With more iterations, the distribution would become more even.
-This validates the uniform distribution of both the square and diagonal movements.
+This validates the uniform distribution of both the movements algorithms.
 % and validates the uniform distribution of the random start and end points
 
 \begin{figure}[ht]
@@ -88,7 +88,7 @@ This validates the uniform distribution of both the square and diagonal movement
     \label{fig:task1-visited}
 \end{figure}
 
-There is a significant difference in the number of visited cells between the square and diagonal movements.
+There is a significant difference in the number of visited cells between the movement types.
 This is because the diagonal movement can move further in a single step than the square movement.
 
 The square can perform one step to the left, right, up or down.
@@ -99,7 +99,7 @@ Hence square movement is on average $(1 \times 4) / 4 = 1$ steps
 The diagonal movement is on average $(\sqrt{2} \times 4 + 1 \times 4) / 8 = 1.2071$ steps
 Square is factor of $1 / 1.2071 = 0.8284$ compared to diagonal.
 
-In the scene of moving from one point to another, the diagonal movement is more efficient than the square movement.
+In the sense of moving from one point to another, the diagonal movement is more efficient than the square movement.
 This is different from computational complexity.
 % However, this is different from computational complexity, where the square movement is more efficient than the diagonal movement.
 
@@ -139,7 +139,6 @@ This is different from computational complexity.
 Using criterion, the computational complexity of the different movements can be measured.
 The results are shown in \autoref{fig:move-cell-criterion}.
 Square movements take $16.2ns$ compared to diagonal movements which take $42.7ns$, this is a ratio of 0.3794.
-The diagonal movement is more computationally complex than square movement.
 
 \begin{figure}[ht]
     \centering
@@ -148,9 +147,9 @@ The diagonal movement is more computationally complex than square movement.
     \label{fig:move-cell-criterion}
 \end{figure}
 
-
+The diagonal movement is more computationally complex than square movement.
 This is because the diagonal movement requires more checks to ensure the cell does not move off the grid.
-The act of generating a random number is the same for both movements as a single random number is generated to determine the direction of movement.
+The act of generating a random number is the same for both movements as a single number is generated to determine the direction of travel.
 
 As single move is of complexity $O(1)$, the complexity of multiple moves is $O(n)$ where $n$ is the number of steps taken.
 
@@ -161,7 +160,7 @@ As single move is of complexity $O(1)$, the complexity of multiple moves is $O(n
 By selecting a random start and end point, we can compare the number of steps and time taken by the square and diagonal movements directly.
 If this movement simulation is performed multiple times, the average number of steps and time taken by the two movements can be compared.
 
-Given enough iterations, the average should stabilize and the difference in the number of steps and time taken by the square and diagonal movements can be calculated.
+Given enough iterations, the average should stabilize and the difference in the number of steps and time taken by the movements can be calculated.
 
 \begin{figure}[ht]
     \centering
@@ -199,7 +198,7 @@ However, the diagonal movement takes longer (time) as the computational complexi
 
 \clearpage
 
-By taking the same process and applying it to a random selection of start and end points, 
+By taking the same process and applying it to a random selection of points, 
 the average number of steps and time taken by the movements can be compared for different distances travelled (\autoref{fig:task1-compare}).
 
 % By also measuring the time taken for the simulation to complete allows the computational complexity of the different movements to be compared.
@@ -214,7 +213,7 @@ the average number of steps and time taken by the movements can be compared for 
     \label{fig:task1-compare}
 \end{figure}
 
-Next, by plotting the ratio of the average number of steps and time taken by the square and diagonal movements
+Next, by plotting the ratio of the average number of steps and time taken by movements
 we can establish a factor by which the diagonal movement is more efficient than the square movement (\autoref{fig:task1-factor-length}).
 
 \begin{figure}[ht]

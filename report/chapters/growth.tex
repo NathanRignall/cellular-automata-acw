@@ -23,7 +23,8 @@
 
 % \[ N = \dfrac{M}{10^{4e^{-kt}}}  \]
 
-Using the Euler method, we can simulate the differential equation for cell growth shown in \autoref{fig:task2-1}.
+Using the Euler method, we can simulate the differential equation for cell growth shown in \autoref{fig:task2-1},
+code in \autoref{lst:growthModel}.
 This uses the rate of growth at a point in time to calculate the number of cells at the next time step.
 
 \setlength{\belowdisplayskip}{0pt} \setlength{\belowdisplayshortskip}{0pt}
@@ -43,7 +44,7 @@ This uses the rate of growth at a point in time to calculate the number of cells
 The growth appears to reach a steady state at around 1200 time units, at this time the percentage of cells filled is 99.31\%.
 Given the growth is modelled using an exponential function, the growth fills to 100\% at $t = \infty$,
 this applies if the simulation has an infinite accuracy.
-However on a computer system this value would be rounded up, resulting in a finite time to reach full capacity.
+However, on a computer system this value would be rounded up, resulting in a finite time to reach full capacity.
 Steady state can be defined numerically as:
 
 \begin{itemize}
@@ -90,7 +91,7 @@ Steady state can be defined numerically as:
 
 % Analytically calculate the rate of growth for various values of T.
 
-\autoref{fig:task2-1-t-dt} shows the rate of growth ($\frac{dN}{dt}$) and the rate of change of the rate of growth ($\frac{d^2N}{dt^2}$) for the simulation, solved analytically.
+\autoref{fig:task2-1-t-dt} shows ($\frac{dN}{dt}$) and ($\frac{d^2N}{dt^2}$) for the simulation, solved analytically.
 When we reach a value of $t = 1200$, the rate of growth is 4.083e+08, and the rate of change of the rate of growth is -0.005959.
 
 \clearpage
@@ -118,7 +119,7 @@ Larger values of $h$ will result in larger computation errors relative to the an
         \caption[Zoomed simulation]{Zoomed simulation}
         \label{fig:task2-1-h-zoom}
     \end{subfigure}
-    \caption[Cell growth simulation with different dt values]{Cell growth simulation with different dt values}
+    \caption[Cell growth simulation with different $h$ values]{Cell growth simulation with different $h$ values}
     \label{fig:task2-1-h}
 \end{figure}
 
@@ -128,7 +129,7 @@ Smaller values of $h$ result in a more accurate simulation, scaling linearly wit
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=14cm]{task2-1-h-bar-error}
-    \caption[Cell growth simulation with different dt values (error)]{Cell growth simulation with different dt values (error)}
+    \caption[Cell growth simulation with different $h$ values (error)]{Cell growth simulation with different $h$ values (error)}
     \label{fig:task2-1-h-bar-error}
 \end{figure}
 
@@ -232,7 +233,7 @@ by plotting the percentage filled against the analytical solution (\autoref{fig:
     \label{fig:task2-1-m-bar-percentage}
 \end{figure}
 
-The different values for $M$ do not significantly change the time to execute, as the resolution and time steps are the same (\autoref{fig:growth-m-criterion}).
+The values for $M$ do not significantly change the time to execute, as the resolution and time steps are the same (\autoref{fig:growth-m-criterion}).
 This is not the case for $M=10^9$ as the initial capacity is $10^9$.
 When performing the $dN/dt$ calculation, the result is zero.
 Multiplications by zero are faster than multiplications by other values, hence the simulation is faster.
@@ -261,8 +262,8 @@ Given the random walk is independent of the growth model, we can expect the same
 \end{figure}
 
 When the random walk reaches a cell it has already visited, it will instantly move to a new cell as the percentage full will be already above the threshold.
-Hence if the total number cells is plotted, we can expect a linear growth as shown in \autoref{fig:task2-2-total-linear} with 100 walk steps.
-This linear growth can be estimated with a linear function at a steady state, until the tissue/grid is full.
+Hence if the total number of cells is plotted, we can expect a linear growth as shown in \autoref{fig:task2-2-total-linear} with 100 walk steps.
+This growth can be estimated with a linear function at a steady state, until the tissue/grid is full.
 
 % \begin{figure}[ht]
 %     \centering
@@ -282,7 +283,7 @@ This linear growth can be estimated with a linear function at a steady state, un
 
 \subsection{Changing the Grid Size}
 
-All simulations to this point used a grid size of 100x100, with a maximum capacity of 10,000 cells areas.
+All simulations to this point used a grid size of 100x100, with a maximum capacity of 10,000 cells.
 \autoref{fig:task1-compare-grid} shows the simulations steps required to fill the grid for different grid sizes,
 the graph is plotted against grid area.
 
