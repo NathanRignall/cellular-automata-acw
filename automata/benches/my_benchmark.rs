@@ -27,6 +27,33 @@ fn growth_dt(c: &mut Criterion) {
     group.finish();
 }
 
+// performance test for different values of m
+fn growth_m(c: &mut Criterion) {
+    let mut group = c.benchmark_group("growth_m");
+
+    let powers = 9..=17;
+    let m_values = powers.map(|x| 10.0_f64.powi(x));
+
+    // iterate over different values of m from 1_000_000_000 to 10_000_000_000_000 at steps of multiplication by 10
+    for m in m_values {
+        group.bench_with_input(
+            criterion::BenchmarkId::new("m", m),
+            &m,
+            |b, &m| {
+                b.iter(|| {
+                    let k: f64 = 0.006;
+                    let dt: f64 = 0.1;
+                    let initial_n: f64 = 1_000_000_000.0;
+                    let t_final = (1200.0 / dt) as usize;
+                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final));
+                });
+            },
+        );
+    }
+    group.finish();
+}
+
+
 // performance test for different simulation distances
 fn simlate_distance(c: &mut Criterion) {
     let mut group = c.benchmark_group("simulate_distance");
@@ -118,5 +145,5 @@ fn move_cell(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, growth_dt, simlate_distance, simulate_grid_size, move_cell);
+criterion_group!(benches, growth_dt, growth_m, simlate_distance, simulate_grid_size, move_cell);
 criterion_main!(benches);
