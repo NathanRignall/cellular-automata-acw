@@ -1,4 +1,4 @@
-pub fn simulate(k: f64, m: f64, dt: f64, initial_n: f64, t_final: usize) -> Vec<f64> {
+pub fn simulate(k: f64, m: f64, dt: f64, initial_n: f64, t_final: usize, condition: bool) -> Vec<f64> {
     // initialize an array to store the number of cells
     let mut n: Vec<f64> = vec![0.0; t_final];
     n[0] = initial_n;
@@ -13,8 +13,7 @@ pub fn simulate(k: f64, m: f64, dt: f64, initial_n: f64, t_final: usize) -> Vec<
         n[i] = n[i - 1] + dn_dt * dt;
 
         // exit early if dn_dt is greater than 99.31% of m
-        if n[i] >= 0.9931 * m {
-            // println!("Early exit at t = {}", t_current);
+        if n[i] >= 0.9931 * m && condition {
             break;
         }
     }
@@ -37,7 +36,7 @@ mod tests {
         let dt: f64 = 0.001;
         let initial_n: f64 = 1_000_000_000.0;
         let t_final = (1200.0 / dt) as usize;
-        let n = simulate(k, m, dt, initial_n, t_final);
+        let n = simulate(k, m, dt, initial_n, t_final, false);
         assert_eq!(n.len(), t_final);
     }
 }

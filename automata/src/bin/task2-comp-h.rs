@@ -16,7 +16,7 @@ fn generate(dt: i32) {
     n[0] = initial_n;
 
     // euler method to solve the differential equation
-    n = automata::growth::simulate(k, m, dt, initial_n, t_final);
+    n = automata::growth::simulate(k, m, dt, initial_n, t_final, false);
 
     // write the results to the csv file
     for (i, cells) in n.iter().enumerate() {

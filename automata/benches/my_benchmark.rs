@@ -19,7 +19,7 @@ fn growth_dt(c: &mut Criterion) {
                     let m: f64 = 10_000_000_000_000.0;
                     let initial_n: f64 = 1_000_000_000.0;
                     let t_final = (1200.0 / dt) as usize;
-                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final));
+                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final, false));
                 });
             },
         );
@@ -45,7 +45,7 @@ fn growth_m(c: &mut Criterion) {
                     let dt: f64 = 0.1;
                     let initial_n: f64 = 1_000_000_000.0;
                     let t_final = (1200.0 / dt) as usize;
-                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final));
+                    black_box(automata::growth::simulate(k, m, dt, initial_n, t_final, false));
                 });
             },
         );

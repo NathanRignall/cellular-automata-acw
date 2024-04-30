@@ -36,7 +36,7 @@ fn main() {
         let current_n = grid[new_position.0][new_position.1];
 
         // simulate the growth of the cells
-        let n = automata::growth::simulate(k, m, dt, current_n, t_final);
+        let n = automata::growth::simulate(k, m, dt, current_n, t_final, true);
         grid[new_position.0][new_position.1] = n[n.len() - 1];
 
         // update the grid and position

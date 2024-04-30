@@ -12,7 +12,7 @@ fn generate(power: i32) {
     let t_final = (1200.0 / dt) as usize;
 
     // euler method to solve the differential equation
-    let n = automata::growth::simulate(k, m, dt, initial_n, t_final);
+    let n = automata::growth::simulate(k, m, dt, initial_n, t_final, false);
 
     // write the results to the csv file
     for (i, cells) in n.iter().enumerate() {
